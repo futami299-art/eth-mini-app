@@ -1,237 +1,802 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EthReward - Earn ETH</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887"></script>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;padding:20px;min-height:100vh;}
-        .container{max-width:450px;margin:0 auto;}
-        .user-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-        .avatar{width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,#f093fb,#f5576c);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;}
-        .avatar img{width:100%;height:100%;object-fit:cover;}
-        .user-name{font-size:18px;font-weight:600;}
-        .user-id{font-size:11px;opacity:0.6;}
-        .balance-card{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:24px;padding:24px;margin-bottom:16px;text-align:center;}
-        .balance-label{font-size:12px;opacity:0.8;letter-spacing:1px;}
-        .balance-amount{font-size:36px;font-weight:800;font-family:monospace;margin:8px 0;}
-        .balance-usd{font-size:13px;opacity:0.8;}
-        .progress-section{margin-top:16px;}
-        .progress-text{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;}
-        .progress-bar{background:rgba(255,255,255,0.2);border-radius:10px;height:6px;overflow:hidden;}
-        .progress-fill{background:linear-gradient(90deg,#f093fb,#f5576c);width:0%;height:100%;transition:width 0.3s ease;}
-        .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
-        .stat-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border-radius:16px;padding:14px;text-align:center;}
-        .stat-number{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .stat-label{font-size:11px;opacity:0.6;margin-top:4px;}
-        .btn-watch{width:100%;background:linear-gradient(135deg,#f093fb,#f5576c);border:none;padding:16px;border-radius:50px;font-size:18px;font-weight:700;color:white;cursor:pointer;margin-bottom:12px;transition:transform 0.1s ease;}
-        .btn-watch:active{transform:scale(0.97);}
-        .btn-watch:disabled{opacity:0.5;transform:none;cursor:not-allowed;}
-        .btn-withdraw{width:100%;background:transparent;border:1.5px solid #667eea;padding:14px;border-radius:50px;font-size:16px;font-weight:600;color:#667eea;cursor:pointer;margin-bottom:10px;transition:all 0.1s ease;}
-        .btn-withdraw:active{transform:scale(0.97);background:rgba(102,126,234,0.1);}
-        .wallet-area{background:rgba(255,255,255,0.08);border-radius:50px;padding:6px 6px 6px 18px;display:flex;gap:8px;align-items:center;}
-        .wallet-area input{flex:1;background:transparent;border:none;color:white;font-size:12px;font-family:monospace;outline:none;}
-        .wallet-area input::placeholder{color:rgba(255,255,255,0.4);}
-        .wallet-area button{background:linear-gradient(135deg,#667eea,#764ba2);border:none;padding:8px 16px;border-radius:50px;color:white;font-weight:600;cursor:pointer;}
-        .wallet-area button:active{transform:scale(0.95);}
-        .timer-box{background:rgba(0,0,0,0.8);backdrop-filter:blur(20px);border-radius:50px;padding:12px 20px;margin-bottom:12px;text-align:center;border:1px solid rgba(255,255,255,0.2);}
-        .timer-seconds{font-size:36px;font-weight:800;font-family:monospace;color:#f093fb;}
-        .timer-label{font-size:11px;opacity:0.7;}
-        .warning{background:rgba(245,87,108,0.2);border:1px solid #f5576c;border-radius:12px;padding:10px;text-align:center;font-size:12px;margin-top:12px;display:none;}
-        .info{font-size:10px;text-align:center;opacity:0.4;margin-top:16px;}
-        .loading{text-align:center;padding:50px;}
-        .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#f093fb;border-radius:50%;margin:0 auto 12px;animation:spin 0.8s linear infinite;}
-        @keyframes spin{to{transform:rotate(360deg);}}
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>ETH Earner</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap');
+
+  :root {
+    --bg: #0a0a12;
+    --surface: #12121e;
+    --card: #1a1a2e;
+    --border: #2a2a45;
+    --accent1: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --green: #10b981;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+  }
+
+  /* ── Animated mesh background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,58,237,.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 110%, rgba(6,182,212,.2) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; }
+
+  /* ── Header ── */
+  .header {
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent1);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    overflow: hidden;
+  }
+
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .avatar-ring {
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .user-info h2 {
+    font-size: 18px; font-weight: 800;
+    background: linear-gradient(90deg, var(--accent2), var(--accent1));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .user-info p { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+  /* ── Balance card ── */
+  .balance-card {
+    margin: 20px 16px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .balance-card::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,.3), transparent 70%);
+  }
+
+  .balance-label {
+    font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 8px;
+  }
+
+  .balance-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 32px; font-weight: 700;
+    color: var(--accent3);
+    letter-spacing: -1px;
+  }
+
+  .balance-amount span { font-size: 16px; color: var(--muted); }
+
+  .balance-meta {
+    margin-top: 12px;
+    display: flex; gap: 16px;
+  }
+
+  .meta-item {
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .meta-item .val {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px; font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .meta-item .lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Ad button ── */
+  .ad-section { margin: 16px 16px 0; }
+
+  .ad-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent1), #4f46e5, var(--accent2));
+    background-size: 200% 200%;
+    animation: gradShift 3s ease infinite;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(124,58,237,.4);
+    letter-spacing: .5px;
+  }
+
+  @keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .ad-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(rgba(255,255,255,.1), rgba(255,255,255,0));
+  }
+
+  .ad-btn:active { transform: scale(.97); }
+  .ad-btn:disabled {
+    background: var(--surface);
+    color: var(--muted);
+    box-shadow: none;
+    animation: none;
+    cursor: not-allowed;
+  }
+
+  .ad-btn .btn-sub {
+    display: block;
+    font-size: 11px; font-weight: 400;
+    opacity: .75; margin-top: 3px;
+  }
+
+  /* ── Ads used indicator ── */
+  .ads-tracker {
+    margin-top: 12px;
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  .ads-tracker .dot {
+    flex: 1; height: 6px; border-radius: 3px;
+    background: var(--border);
+    transition: background .3s;
+  }
+
+  .ads-tracker .dot.used { background: var(--accent1); }
+
+  .ads-tracker-label {
+    font-size: 11px; color: var(--muted);
+    white-space: nowrap;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── Timer overlay ── */
+  .timer-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px;
+  }
+
+  .timer-overlay.active { display: flex; }
+
+  .timer-ring {
+    position: relative; width: 140px; height: 140px;
+  }
+
+  .timer-ring svg { transform: rotate(-90deg); }
+
+  .timer-ring circle {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+
+  .timer-ring .bg { stroke: var(--border); }
+
+  .timer-ring .progress {
+    stroke: var(--accent2);
+    stroke-dasharray: 376;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    filter: drop-shadow(0 0 8px var(--accent2));
+  }
+
+  .timer-number {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 38px; font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .timer-text {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    text-align: center;
+  }
+
+  .timer-sub { font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 20px;
+    font-size: 14px; font-weight: 600;
+    z-index: 200; transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: var(--green); color: var(--green); }
+  .toast.error   { border-color: var(--red);   color: var(--red); }
+  .toast.info    { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ── Withdraw section ── */
+  .section {
+    margin: 16px 16px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 13px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent2); margin-bottom: 16px;
+  }
+
+  .input-group { margin-bottom: 12px; }
+
+  .input-label {
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 6px; display: block;
+  }
+
+  .eth-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .eth-input:focus { border-color: var(--accent1); }
+  .eth-input::placeholder { color: var(--muted); }
+
+  .btn-row { display: flex; gap: 10px; }
+
+  .btn-save {
+    flex: 1; padding: 12px;
+    background: transparent;
+    border: 1px solid var(--accent1);
+    border-radius: 10px;
+    color: var(--accent1);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+
+  .btn-save:active { transform: scale(.97); }
+  .btn-save:hover  { background: rgba(124,58,237,.12); }
+
+  .btn-withdraw {
+    flex: 2; padding: 12px;
+    background: linear-gradient(135deg, var(--green), #059669);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 800;
+    cursor: pointer;
+    transition: transform .1s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(16,185,129,.3);
+  }
+
+  .btn-withdraw:active   { transform: scale(.97); }
+  .btn-withdraw:disabled {
+    background: var(--surface);
+    color: var(--muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .withdraw-note {
+    font-size: 11px; color: var(--muted);
+    margin-top: 10px; text-align: center;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── How it works ── */
+  .how-section {
+    margin: 16px 16px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+
+  .step {
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+
+  .step-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .step-text { font-size: 13px; color: var(--muted); line-height: 1.5; padding-top: 4px; }
+  .step-text strong { color: var(--text); }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    padding: 0 20px;
+  }
+
+  /* ── Shimmer loading ── */
+  .shimmer {
+    background: linear-gradient(90deg, var(--card) 25%, var(--border) 50%, var(--card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+  }
+
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* ── Pulse animation for balance on earn ── */
+  @keyframes balancePop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.12); color: var(--green); }
+    100% { transform: scale(1); }
+  }
+
+  .balance-pop { animation: balancePop .5s ease; }
+
+  /* ── Entrance animations ── */
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    animation: fadeIn .5s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: .05s; }
+  .fade-in:nth-child(2) { animation-delay: .12s; }
+  .fade-in:nth-child(3) { animation-delay: .19s; }
+  .fade-in:nth-child(4) { animation-delay: .26s; }
+  .fade-in:nth-child(5) { animation-delay: .33s; }
+</style>
 </head>
 <body>
-    <div class="container" id="app">
-        <div class="loading"><div class="spinner"></div>Loading...</div>
-    </div>
+<div class="page">
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-        
-        const user = tg.initDataUnsafe?.user;
-        const BOT_API_URL = 'https://eth-telegram-bot-4-j7vv.onrender.com';
-        const DAILY_LIMIT = 5;
-        const REWARD_AMOUNT = 0.00005;
-        const MIN_WITHDRAWAL = 0.001;
-        const ETH_PRICE = 2000;
-        const AD_DURATION = 15;
-        
-        let balance = 0, todayCount = 0, isWatching = false, currentTimer = null;
-        
-        function loadData() {
-            if(!user?.id) return;
-            const savedBalance = localStorage.getItem(`eth_balance_${user.id}`);
-            const savedDate = localStorage.getItem(`eth_date_${user.id}`);
-            const savedCount = localStorage.getItem(`eth_count_${user.id}`);
-            const today = new Date().toISOString().split('T')[0];
-            if(savedDate === today){
-                todayCount = parseInt(savedCount) || 0;
-                balance = parseFloat(savedBalance) || 0;
-            }else{
-                todayCount = 0;
-                balance = parseFloat(savedBalance) || 0;
-                localStorage.setItem(`eth_date_${user.id}`, today);
-                localStorage.setItem(`eth_count_${user.id}`, '0');
-            }
-            render();
-        }
-        
-        function saveData(){
-            if(!user?.id) return;
-            localStorage.setItem(`eth_balance_${user.id}`, balance);
-            localStorage.setItem(`eth_count_${user.id}`, todayCount);
-        }
-        
-        function giveReward(){
-            if(todayCount >= DAILY_LIMIT){
-                tg.showAlert(`❌ Daily limit reached! ${todayCount}/${DAILY_LIMIT}`);
-                return false;
-            }
-            todayCount++;
-            balance += REWARD_AMOUNT;
-            saveData();
-            render();
-            tg.showAlert(`✅ You earned ${REWARD_AMOUNT} ETH!\n💰 New balance: ${balance.toFixed(8)} ETH`);
-            tg.HapticFeedback.notificationOccurred('success');
-            const nextTime = new Date();
-            nextTime.setHours(nextTime.getHours() + 6);
-            fetch(`${BOT_API_URL}/api/schedule-notification`,{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({user_id:user.id, notify_at:nextTime.toISOString()})
-            }).catch(e=>console.log('Schedule error:',e));
-            return true;
-        }
-        
-        function startTimer(callback){
-            let seconds = AD_DURATION;
-            const timerHtml = `<div class="timer-box" id="timerBox"><div class="timer-label">🎬 Watching Ad</div><div class="timer-seconds" id="timerSeconds">${seconds}</div><div class="timer-label">Please wait... Don't close</div></div>`;
-            const watchBtn = document.getElementById('watchBtn');
-            watchBtn.insertAdjacentHTML('afterend', timerHtml);
-            watchBtn.disabled = true;
-            currentTimer = setInterval(()=>{
-                seconds--;
-                const timerEl = document.getElementById('timerSeconds');
-                if(timerEl) timerEl.textContent = seconds;
-                if(seconds <= 0){
-                    clearInterval(currentTimer);
-                    currentTimer = null;
-                    document.getElementById('timerBox')?.remove();
-                    watchBtn.disabled = false;
-                    callback();
-                }
-            }, 1000);
-        }
-        
-        function stopTimer(){
-            if(currentTimer) clearInterval(currentTimer);
-            currentTimer = null;
-            document.getElementById('timerBox')?.remove();
-            const watchBtn = document.getElementById('watchBtn');
-            if(watchBtn) watchBtn.disabled = false;
-        }
-        
-        function watchAd(){
-            if(todayCount >= DAILY_LIMIT){
-                tg.showAlert(`⚠️ Daily limit reached! ${todayCount}/${DAILY_LIMIT}`);
-                return;
-            }
-            if(isWatching){
-                tg.showAlert('⏳ Please wait! Ad is already playing.');
-                return;
-            }
-            isWatching = true;
-            tg.showPopup({
-                title:'🎬 Watch Ad',
-                message:`Watch ${AD_DURATION} second ad to earn ${REWARD_AMOUNT} ETH\n\n⚠️ Closing early = NO REWARD!`,
-                buttons:[{id:'watch',type:'default',text:'📺 Watch Now'},{id:'cancel',type:'cancel',text:'Cancel'}]
-            },(buttonId)=>{
-                if(buttonId !== 'watch'){
-                    isWatching = false;
-                    return;
-                }
-                if(typeof window.show_10819887 !== 'undefined'){
-                    try{
-                        window.show_10819887({
-                            onReward:function(){ startTimer(()=>{ giveReward(); isWatching = false; }); },
-                            onClose:function(){ stopTimer(); isWatching = false; tg.showAlert('❌ Ad closed early! No reward.'); tg.HapticFeedback.notificationOccurred('error'); },
-                            onError:function(){ stopTimer(); isWatching = false; tg.showAlert('❌ Ad failed. Try again.'); }
-                        });
-                    }catch(e){ startTimer(()=>{ giveReward(); isWatching = false; }); }
-                }else{ startTimer(()=>{ giveReward(); isWatching = false; }); }
-            });
-        }
-        
-        function withdraw(){
-            if(balance < MIN_WITHDRAWAL){
-                tg.showAlert(`❌ Minimum withdrawal: ${MIN_WITHDRAWAL} ETH\nYour balance: ${balance.toFixed(8)} ETH`);
-                return;
-            }
-            tg.showPopup({
-                title:'💸 Withdraw ETH',
-                message:`Amount: ${balance.toFixed(8)} ETH\n\nEnter your ETH wallet address:`,
-                buttons:[{id:'ok',type:'ok',text:'Continue'},{id:'cancel',type:'cancel'}]
-            },(buttonId)=>{
-                if(buttonId === 'ok'){
-                    tg.showPopup({title:'📝 Wallet Address',message:'Paste your ETH address (starts with 0x)',type:'prompt'},(result)=>{
-                        if(result && result.startsWith('0x') && result.length === 42){
-                            const requests = JSON.parse(localStorage.getItem(`eth_withdrawals_${user?.id}`) || '[]');
-                            requests.push({amount:balance, wallet:result, date:new Date().toISOString(), status:'pending'});
-                            localStorage.setItem(`eth_withdrawals_${user?.id}`, JSON.stringify(requests));
-                            const withdrawnAmount = balance;
-                            balance = 0;
-                            saveData();
-                            render();
-                            tg.showAlert(`✅ Withdrawal submitted!\nAmount: ${withdrawnAmount.toFixed(8)} ETH\nWallet: ${result.substring(0,10)}...`);
-                            tg.HapticFeedback.notificationOccurred('success');
-                        }else{ tg.showAlert('❌ Invalid ETH address! Must be 42 chars starting with 0x'); }
-                    });
-                }
-            });
-        }
-        
-        function saveWallet(){
-            const input = document.getElementById('walletInput');
-            const wallet = input?.value.trim();
-            if(wallet && wallet.startsWith('0x') && wallet.length === 42){
-                localStorage.setItem(`eth_wallet_${user?.id}`, wallet);
-                tg.showAlert('✅ Wallet saved!');
-                tg.HapticFeedback.impactOccurred('light');
-            }else if(wallet){ tg.showAlert('❌ Invalid ETH address!'); }
-        }
-        
-        function render(){
-            const remaining = DAILY_LIMIT - todayCount;
-            const usdValue = balance * ETH_PRICE;
-            const progressPercent = (todayCount / DAILY_LIMIT) * 100;
-            const savedWallet = localStorage.getItem(`eth_wallet_${user?.id}`) || '';
-            const photoUrl = user?.photo_url;
-            document.getElementById('app').innerHTML = `
-                <div class="user-card"><div class="avatar">${photoUrl ? `<img src="${photoUrl}" onerror="this.innerHTML='👤'">` : '👤'}</div><div><div class="user-name">${user?.first_name || 'User'} ${user?.last_name || ''}</div><div class="user-id">🆔 ${user?.id || '-'}</div></div></div>
-                <div class="balance-card"><div class="balance-label">💰 YOUR BALANCE</div><div class="balance-amount">${balance.toFixed(8)} ETH</div><div class="balance-usd">≈ $${usdValue.toFixed(2)} USD</div><div class="progress-section"><div class="progress-text"><span>Daily Progress</span><span>${todayCount}/${DAILY_LIMIT}</span></div><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%"></div></div></div></div>
-                <div class="stats"><div class="stat-card"><div class="stat-number">${todayCount}</div><div class="stat-label">Today's Claims</div></div><div class="stat-card"><div class="stat-number">${remaining}</div><div class="stat-label">Remaining</div></div></div>
-                <button class="btn-watch" id="watchBtn" ${todayCount >= DAILY_LIMIT ? 'disabled' : ''}>🎬 Watch Ad & Earn ${REWARD_AMOUNT} ETH</button>
-                <button class="btn-withdraw" id="withdrawBtn">💸 Withdraw ETH (Min ${MIN_WITHDRAWAL} ETH)</button>
-                <div class="wallet-area"><span>📋</span><input type="text" id="walletInput" placeholder="Paste your ETH wallet address" value="${savedWallet}"><button id="saveWalletBtn">Save</button></div>
-                <div class="info">⚡ ${DAILY_LIMIT} ads/day • ${REWARD_AMOUNT} ETH per ad<br>💎 Need ${Math.ceil(MIN_WITHDRAWAL/REWARD_AMOUNT)} ads to withdraw</div>
-                <div class="warning" id="warningBox" style="${todayCount >= DAILY_LIMIT ? 'display:block' : 'display:none'}">⚠️ Daily limit reached! Come back tomorrow.</div>
-            `;
-            document.getElementById('watchBtn')?.addEventListener('click', watchAd);
-            document.getElementById('withdrawBtn')?.addEventListener('click', withdraw);
-            document.getElementById('saveWalletBtn')?.addEventListener('click', saveWallet);
-        }
-        
-        if(user){ loadData(); }
-        else{ document.getElementById('app').innerHTML = '<div class="loading"><div class="spinner"></div>⚠️ Please open from Telegram</div>'; }
-    </script>
+  <!-- Header -->
+  <div class="header fade-in">
+    <div class="avatar-wrap">
+      <div class="avatar" id="avatar">👤</div>
+      <div class="avatar-ring"></div>
+    </div>
+    <div class="user-info">
+      <h2 id="userName">Loading…</h2>
+      <p id="userId">ID: —</p>
+    </div>
+  </div>
+
+  <!-- Balance -->
+  <div class="balance-card fade-in">
+    <div class="balance-label">Your Balance</div>
+    <div class="balance-amount" id="balanceDisplay">0.00000000 <span>ETH</span></div>
+    <div class="balance-meta">
+      <div class="meta-item">
+        <div class="val" id="adsToday">0 / 5</div>
+        <div class="lbl">Ads Today</div>
+      </div>
+      <div class="meta-item">
+        <div class="val" id="totalEarned">0.00000</div>
+        <div class="lbl">Total ETH Earned</div>
+      </div>
+      <div class="meta-item">
+        <div class="val" id="withdrawnTotal">0.00000</div>
+        <div class="lbl">Withdrawn</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad section -->
+  <div class="ad-section fade-in">
+    <button class="ad-btn" id="adBtn" onclick="startAd()">
+      ▶ Watch Ad &amp; Earn 0.00005 ETH
+      <span class="btn-sub">15-second video · reward on completion</span>
+    </button>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:10px;">
+      <div class="ads-tracker" id="adsTracker" style="flex:1">
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+        <div class="dot" id="d3"></div>
+        <div class="dot" id="d4"></div>
+        <div class="dot" id="d5"></div>
+      </div>
+      <div class="ads-tracker-label" id="trackerLabel">0/5 used</div>
+    </div>
+  </div>
+
+  <!-- Withdraw -->
+  <div class="section fade-in">
+    <div class="section-title">💸 Withdraw ETH</div>
+    <div class="input-group">
+      <label class="input-label">ETH Wallet Address</label>
+      <input class="eth-input" id="walletInput" type="text"
+             placeholder="0x..." autocomplete="off" spellcheck="false"/>
+    </div>
+    <div class="btn-row">
+      <button class="btn-save" onclick="saveWallet()">💾 Save</button>
+      <button class="btn-withdraw" id="withdrawBtn" onclick="withdraw()">Withdraw ETH →</button>
+    </div>
+    <div class="withdraw-note" id="withdrawNote">Min. 0.001 ETH required to withdraw</div>
+  </div>
+
+  <!-- How it works -->
+  <div class="how-section fade-in">
+    <div class="section-title">⚡ How It Works</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Watch an ad</strong> — tap the button above and let the 15-second timer run out.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Don't close early</strong> — leaving before the timer ends gives no reward.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Earn 0.00005 ETH</strong> per ad, up to <strong>5 ads/day</strong> (resets midnight UTC).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Withdraw</strong> once you reach <strong>0.001 ETH</strong> minimum balance.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer fade-in">Rewards stored locally · Data resets if browser storage cleared</div>
+
+</div><!-- .page -->
+
+<!-- Timer Overlay -->
+<div class="timer-overlay" id="timerOverlay">
+  <div class="timer-ring">
+    <svg width="140" height="140" viewBox="0 0 140 140">
+      <circle class="bg"       cx="70" cy="70" r="60"/>
+      <circle class="progress" cx="70" cy="70" r="60" id="timerCircle"/>
+    </svg>
+    <div class="timer-number" id="timerNum">15</div>
+  </div>
+  <div class="timer-text">⚡ Ad is playing…</div>
+  <div class="timer-sub">Keep this open to earn your reward!</div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Constants ───────────────────────────────────────────────────────────────
+const REWARD_PER_AD = 0.00005;
+const MAX_ADS_DAY   = 5;
+const MIN_WITHDRAW  = 0.001;
+const CIRCUMFERENCE = 2 * Math.PI * 60; // ≈ 376.99
+
+// ─── State ───────────────────────────────────────────────────────────────────
+const tg   = window.Telegram?.WebApp;
+const user = tg?.initDataUnsafe?.user || null;
+
+let balance      = 0;
+let totalEarned  = 0;
+let withdrawn    = 0;
+let adsUsedToday = 0;
+let lastDate     = '';
+let savedWallet  = '';
+
+let adRewarded  = false;
+let timerHandle = null;
+let timerSecs   = 15;
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+(function init() {
+  tg?.expand();
+  tg?.setHeaderColor('#0a0a12');
+  tg?.setBackgroundColor('#0a0a12');
+
+  loadData();
+  checkDayReset();
+  renderUser();
+  renderBalance();
+  renderAdsTracker();
+  renderWithdrawBtn();
+})();
+
+// ─── Persistence ─────────────────────────────────────────────────────────────
+function loadData() {
+  try {
+    const raw = localStorage.getItem('ethEarner_v2');
+    if (!raw) return;
+    const d    = JSON.parse(raw);
+    balance      = d.balance      ?? 0;
+    totalEarned  = d.totalEarned  ?? 0;
+    withdrawn    = d.withdrawn    ?? 0;
+    adsUsedToday = d.adsUsedToday ?? 0;
+    lastDate     = d.lastDate     ?? '';
+    savedWallet  = d.savedWallet  ?? '';
+  } catch(e) {}
+}
+
+function saveData() {
+  localStorage.setItem('ethEarner_v2', JSON.stringify({
+    balance, totalEarned, withdrawn, adsUsedToday, lastDate, savedWallet
+  }));
+}
+
+function checkDayReset() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (lastDate !== today) { adsUsedToday = 0; lastDate = today; saveData(); }
+}
+
+// ─── User display ─────────────────────────────────────────────────────────────
+function renderUser() {
+  if (user) {
+    const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || 'Telegram User';
+    document.getElementById('userName').textContent = name;
+    document.getElementById('userId').textContent   = `ID: ${user.id}`;
+
+    if (user.photo_url) {
+      const av  = document.getElementById('avatar');
+      av.innerHTML = `<img src="${user.photo_url}" alt="avatar" onerror="this.parentElement.innerHTML='👤'"/>`;
+    }
+  } else {
+    document.getElementById('userName').textContent = 'Demo User';
+    document.getElementById('userId').textContent   = 'Open in Telegram';
+  }
+
+  // Restore saved wallet
+  if (savedWallet) document.getElementById('walletInput').value = savedWallet;
+}
+
+// ─── Balance render ────────────────────────────────────────────────────────────
+function renderBalance() {
+  const el = document.getElementById('balanceDisplay');
+  el.innerHTML = `${balance.toFixed(8)} <span>ETH</span>`;
+  document.getElementById('totalEarned').textContent  = totalEarned.toFixed(5);
+  document.getElementById('withdrawnTotal').textContent = withdrawn.toFixed(5);
+}
+
+function popBalance() {
+  const el = document.getElementById('balanceDisplay');
+  el.classList.remove('balance-pop');
+  void el.offsetWidth;
+  el.classList.add('balance-pop');
+}
+
+// ─── Ads tracker render ────────────────────────────────────────────────────────
+function renderAdsTracker() {
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById(`d${i}`).className = 'dot' + (i <= adsUsedToday ? ' used' : '');
+  }
+  document.getElementById('adsToday').textContent    = `${adsUsedToday} / 5`;
+  document.getElementById('trackerLabel').textContent = `${adsUsedToday}/5 used`;
+
+  const btn = document.getElementById('adBtn');
+  if (adsUsedToday >= MAX_ADS_DAY) {
+    btn.disabled = true;
+    btn.innerHTML = '✅ Daily Limit Reached<span class="btn-sub">Come back tomorrow!</span>';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = `▶ Watch Ad & Earn 0.00005 ETH<span class="btn-sub">15-second video · reward on completion</span>`;
+  }
+}
+
+// ─── Withdraw button ───────────────────────────────────────────────────────────
+function renderWithdrawBtn() {
+  const btn  = document.getElementById('withdrawBtn');
+  const note = document.getElementById('withdrawNote');
+  const need = Math.max(0, MIN_WITHDRAW - balance);
+  if (balance >= MIN_WITHDRAW) {
+    btn.disabled         = false;
+    note.textContent     = `Balance: ${balance.toFixed(8)} ETH — ready to withdraw!`;
+    note.style.color     = 'var(--green)';
+  } else {
+    btn.disabled         = true;
+    note.textContent     = `Need ${need.toFixed(8)} ETH more (min 0.001 ETH)`;
+    note.style.color     = '';
+  }
+}
+
+// ─── Ad flow ───────────────────────────────────────────────────────────────────
+function startAd() {
+  checkDayReset();
+  if (adsUsedToday >= MAX_ADS_DAY) { showToast('Daily limit reached! Come back tomorrow.', 'error'); return; }
+
+  adRewarded = false;
+
+  const adFn = window['show_10819887'];
+  if (typeof adFn === 'function') {
+    adFn({
+      onReward: () => { adRewarded = true; },
+      onClose:  () => { startCountdown(); }
+    });
+  } else {
+    // Fallback for testing outside ad network
+    console.warn('Ad SDK not loaded, running in test mode');
+    adRewarded = true;   // simulate reward for demo
+    startCountdown();
+  }
+}
+
+function startCountdown() {
+  timerSecs = 15;
+  const overlay = document.getElementById('timerOverlay');
+  const circle  = document.getElementById('timerCircle');
+  const num     = document.getElementById('timerNum');
+
+  circle.style.strokeDasharray  = `${CIRCUMFERENCE}`;
+  circle.style.strokeDashoffset = '0';
+  num.textContent = timerSecs;
+  overlay.classList.add('active');
+
+  // Telegram: prevent back button from closing during timer
+  tg?.BackButton?.show();
+  tg?.BackButton?.onClick(() => {});
+
+  timerHandle = setInterval(() => {
+    timerSecs--;
+    num.textContent = timerSecs;
+    const pct    = timerSecs / 15;
+    circle.style.strokeDashoffset = `${CIRCUMFERENCE * (1 - pct)}`;
+
+    if (timerSecs <= 0) {
+      clearInterval(timerHandle);
+      overlay.classList.remove('active');
+      tg?.BackButton?.hide();
+      grantReward();
+    }
+  }, 1000);
+}
+
+function grantReward() {
+  if (!adRewarded) {
+    showToast('⚠️ No reward — ad wasn\'t fully served.', 'error');
+    return;
+  }
+  adsUsedToday++;
+  balance     += REWARD_PER_AD;
+  totalEarned += REWARD_PER_AD;
+  saveData();
+  renderBalance();
+  renderAdsTracker();
+  renderWithdrawBtn();
+  popBalance();
+  showToast(`🎉 +0.00005 ETH earned!`, 'success');
+  tg?.HapticFeedback?.notificationOccurred('success');
+}
+
+// ─── Wallet & Withdraw ────────────────────────────────────────────────────────
+function saveWallet() {
+  const val = document.getElementById('walletInput').value.trim();
+  if (!val) { showToast('Enter a wallet address first.', 'error'); return; }
+  if (!/^0x[0-9a-fA-F]{40}$/.test(val)) {
+    showToast('Invalid ETH address (must start 0x…42 chars).', 'error'); return;
+  }
+  savedWallet = val;
+  saveData();
+  showToast('✅ Wallet address saved!', 'success');
+  tg?.HapticFeedback?.impactOccurred('medium');
+}
+
+function withdraw() {
+  const wallet = document.getElementById('walletInput').value.trim();
+  if (!wallet) { showToast('Enter your ETH wallet address.', 'error'); return; }
+  if (!/^0x[0-9a-fA-F]{40}$/.test(wallet)) {
+    showToast('Invalid ETH address format.', 'error'); return;
+  }
+  if (balance < MIN_WITHDRAW) {
+    showToast(`Need at least 0.001 ETH to withdraw.`, 'error'); return;
+  }
+
+  // In a real app, this would call a backend. Here we simulate it.
+  const amount = balance;
+  withdrawn   += amount;
+  balance      = 0;
+  saveData();
+  renderBalance();
+  renderWithdrawBtn();
+  showToast(`✅ Withdrawal of ${amount.toFixed(8)} ETH requested!`, 'success');
+  tg?.HapticFeedback?.notificationOccurred('success');
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+let toastTimeout;
+function showToast(msg, type = 'info') {
+  clearTimeout(toastTimeout);
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = `toast ${type}`;
+  void el.offsetWidth;
+  el.classList.add('show');
+  toastTimeout = setTimeout(() => el.classList.remove('show'), 3200);
+}
+</script>
 </body>
 </html>
