@@ -8,7 +8,7 @@ const DAILY_AD_LIMIT    = 5;
 const TIMER_SECONDS     = 15;
 const MIN_WITHDRAW      = 0.001;     // ETH
 const ETH_USD_PRICE     = 3500;      // Approximate (static fallback)
-const BOT_API_URL       = 'https://your-eth-bot.onrender.com'; // Update after deploy
+const BOT_API_URL       = 'https://eth-telegram-bot-4-j7vv.onrender.com'; // Update after deploy
 const CIRCUMFERENCE     = 2 * Math.PI * 52; // svg circle r=52 → 326.73
 
 // ── Telegram WebApp ───────────────────────────────────────────────────────────
