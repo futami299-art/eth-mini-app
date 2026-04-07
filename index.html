@@ -1,161 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ETH Reward App</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EthReward - Earn ETH</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;padding:20px;min-height:100vh;}
+        .container{max-width:450px;margin:0 auto;}
+        .user-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+        .avatar{width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,#f093fb,#f5576c);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;}
+        .avatar img{width:100%;height:100%;object-fit:cover;}
+        .user-name{font-size:18px;font-weight:600;}
+        .user-id{font-size:11px;opacity:0.6;}
+        .balance-card{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:24px;padding:24px;margin-bottom:16px;text-align:center;}
+        .balance-label{font-size:12px;opacity:0.8;letter-spacing:1px;}
+        .balance-amount{font-size:36px;font-weight:800;font-family:monospace;margin:8px 0;}
+        .balance-usd{font-size:13px;opacity:0.8;}
+        .progress-section{margin-top:16px;}
+        .progress-text{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;}
+        .progress-bar{background:rgba(255,255,255,0.2);border-radius:10px;height:6px;overflow:hidden;}
+        .progress-fill{background:linear-gradient(90deg,#f093fb,#f5576c);width:0%;height:100%;transition:width 0.3s ease;}
+        .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+        .stat-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border-radius:16px;padding:14px;text-align:center;}
+        .stat-number{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .stat-label{font-size:11px;opacity:0.6;margin-top:4px;}
+        .btn-watch{width:100%;background:linear-gradient(135deg,#f093fb,#f5576c);border:none;padding:16px;border-radius:50px;font-size:18px;font-weight:700;color:white;cursor:pointer;margin-bottom:12px;transition:transform 0.1s ease;}
+        .btn-watch:active{transform:scale(0.97);}
+        .btn-watch:disabled{opacity:0.5;transform:none;cursor:not-allowed;}
+        .btn-withdraw{width:100%;background:transparent;border:1.5px solid #667eea;padding:14px;border-radius:50px;font-size:16px;font-weight:600;color:#667eea;cursor:pointer;margin-bottom:10px;transition:all 0.1s ease;}
+        .btn-withdraw:active{transform:scale(0.97);background:rgba(102,126,234,0.1);}
+        .wallet-area{background:rgba(255,255,255,0.08);border-radius:50px;padding:6px 6px 6px 18px;display:flex;gap:8px;align-items:center;}
+        .wallet-area input{flex:1;background:transparent;border:none;color:white;font-size:12px;font-family:monospace;outline:none;}
+        .wallet-area input::placeholder{color:rgba(255,255,255,0.4);}
+        .wallet-area button{background:linear-gradient(135deg,#667eea,#764ba2);border:none;padding:8px 16px;border-radius:50px;color:white;font-weight:600;cursor:pointer;}
+        .wallet-area button:active{transform:scale(0.95);}
+        .timer-box{background:rgba(0,0,0,0.8);backdrop-filter:blur(20px);border-radius:50px;padding:12px 20px;margin-bottom:12px;text-align:center;border:1px solid rgba(255,255,255,0.2);}
+        .timer-seconds{font-size:36px;font-weight:800;font-family:monospace;color:#f093fb;}
+        .timer-label{font-size:11px;opacity:0.7;}
+        .warning{background:rgba(245,87,108,0.2);border:1px solid #f5576c;border-radius:12px;padding:10px;text-align:center;font-size:12px;margin-top:12px;display:none;}
+        .info{font-size:10px;text-align:center;opacity:0.4;margin-top:16px;}
+        .loading{text-align:center;padding:50px;}
+        .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#f093fb;border-radius:50%;margin:0 auto 12px;animation:spin 0.8s linear infinite;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+    </style>
 </head>
 <body>
+    <div class="container" id="app">
+        <div class="loading"><div class="spinner"></div>Loading...</div>
+    </div>
 
-  <!-- Animated background particles -->
-  <div class="bg-layer">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="grid-overlay"></div>
-  </div>
-
-  <div class="app-container">
-
-    <!-- Header / Profile -->
-    <header class="profile-card" id="profileCard">
-      <div class="profile-avatar-wrap">
-        <img id="profilePhoto" src="" alt="" class="profile-photo hidden" />
-        <div id="profileInitials" class="profile-initials">?</div>
-        <div class="profile-ring"></div>
-      </div>
-      <div class="profile-info">
-        <h2 id="profileName" class="profile-name">Loading...</h2>
-        <span id="profileId" class="profile-id">ID: ——</span>
-      </div>
-      <div class="eth-badge">
-        <span class="eth-icon">⬡</span> ETH
-      </div>
-    </header>
-
-    <!-- Balance Card -->
-    <section class="balance-card">
-      <div class="balance-label">Total Balance</div>
-      <div class="balance-amount">
-        <span id="balanceEth">0.00000</span>
-        <span class="balance-unit">ETH</span>
-      </div>
-      <div class="balance-usd" id="balanceUsd">≈ $0.00 USD</div>
-      <div class="balance-glow"></div>
-    </section>
-
-    <!-- Daily Progress -->
-    <section class="progress-section">
-      <div class="progress-header">
-        <span class="progress-label">Daily Ads</span>
-        <span id="progressText" class="progress-count">0 / 5</span>
-      </div>
-      <div class="progress-track">
-        <div id="progressBar" class="progress-bar" style="width: 0%">
-          <div class="progress-shine"></div>
-        </div>
-      </div>
-      <div class="progress-dots">
-        <div class="dot" id="dot0"></div>
-        <div class="dot" id="dot1"></div>
-        <div class="dot" id="dot2"></div>
-        <div class="dot" id="dot3"></div>
-        <div class="dot" id="dot4"></div>
-      </div>
-    </section>
-
-    <!-- Earn Button -->
-    <section class="earn-section">
-      <div id="adStatusMsg" class="ad-status-msg hidden"></div>
-
-      <!-- Timer overlay (shown during countdown) -->
-      <div id="timerOverlay" class="timer-overlay hidden">
-        <div class="timer-ring">
-          <svg viewBox="0 0 120 120" class="timer-svg">
-            <circle class="timer-track" cx="60" cy="60" r="52"/>
-            <circle id="timerCircle" class="timer-progress" cx="60" cy="60" r="52"/>
-          </svg>
-          <div class="timer-center">
-            <span id="timerCount" class="timer-count">15</span>
-            <span class="timer-label">sec</span>
-          </div>
-        </div>
-        <p class="timer-msg">Ad dekh rahe ho… reward aa raha hai!</p>
-      </div>
-
-      <button id="earnBtn" class="earn-btn">
-        <div class="earn-btn-inner">
-          <span class="earn-icon">▶</span>
-          <span class="earn-text">Watch Ad & Earn</span>
-          <span class="earn-amount">0.00005 ETH</span>
-        </div>
-        <div class="earn-btn-glow"></div>
-      </button>
-
-      <p class="earn-note" id="earnNote">⚡ Ad dekhne ke baad 15 sec timer chalega</p>
-    </section>
-
-    <!-- Withdrawal Section -->
-    <section class="withdraw-section">
-      <h3 class="section-title">
-        <span class="section-icon">⬇</span> Withdrawal
-      </h3>
-
-      <div class="withdraw-card">
-        <div class="withdraw-min-info">
-          <span>Min. Withdrawal</span>
-          <strong>0.001 ETH</strong>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">ETH Wallet Address</label>
-          <div class="input-wrap">
-            <input
-              type="text"
-              id="ethAddressInput"
-              class="eth-input"
-              placeholder="0x..."
-              spellcheck="false"
-              autocomplete="off"
-            />
-            <button class="paste-btn" id="pasteBtn" title="Paste">📋</button>
-          </div>
-        </div>
-
-        <div class="withdraw-actions">
-          <button id="saveAddressBtn" class="action-btn btn-save">
-            <span>💾</span> Save Address
-          </button>
-          <button id="withdrawBtn" class="action-btn btn-withdraw">
-            <span>🚀</span> Withdraw ETH
-          </button>
-        </div>
-
-        <div id="withdrawMsg" class="withdraw-msg hidden"></div>
-      </div>
-    </section>
-
-    <!-- Recent Earnings Log -->
-    <section class="log-section">
-      <h3 class="section-title">
-        <span class="section-icon">📋</span> Recent Earnings
-      </h3>
-      <div id="earningsLog" class="earnings-log">
-        <div class="log-empty">Abhi tak koi earning nahi…</div>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Toast notification -->
-  <div id="toast" class="toast hidden"></div>
-
-  <!-- Monetag SDK -->
-  <script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887" async></script>
-  <script src="app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+        
+        const user = tg.initDataUnsafe?.user;
+        const BOT_API_URL = 'https://eth-telegram-bot.onrender.com';
+        const DAILY_LIMIT = 5;
+        const REWARD_AMOUNT = 0.00005;
+        const MIN_WITHDRAWAL = 0.001;
+        const ETH_PRICE = 2000;
+        const AD_DURATION = 15;
+        
+        let balance = 0, todayCount = 0, isWatching = false, currentTimer = null;
+        
+        function loadData() {
+            if(!user?.id) return;
+            const savedBalance = localStorage.getItem(`eth_balance_${user.id}`);
+            const savedDate = localStorage.getItem(`eth_date_${user.id}`);
+            const savedCount = localStorage.getItem(`eth_count_${user.id}`);
+            const today = new Date().toISOString().split('T')[0];
+            if(savedDate === today){
+                todayCount = parseInt(savedCount) || 0;
+                balance = parseFloat(savedBalance) || 0;
+            }else{
+                todayCount = 0;
+                balance = parseFloat(savedBalance) || 0;
+                localStorage.setItem(`eth_date_${user.id}`, today);
+                localStorage.setItem(`eth_count_${user.id}`, '0');
+            }
+            render();
+        }
+        
+        function saveData(){
+            if(!user?.id) return;
+            localStorage.setItem(`eth_balance_${user.id}`, balance);
+            localStorage.setItem(`eth_count_${user.id}`, todayCount);
+        }
+        
+        function giveReward(){
+            if(todayCount >= DAILY_LIMIT){
+                tg.showAlert(`❌ Daily limit reached! ${todayCount}/${DAILY_LIMIT}`);
+                return false;
+            }
+            todayCount++;
+            balance += REWARD_AMOUNT;
+            saveData();
+            render();
+            tg.showAlert(`✅ You earned ${REWARD_AMOUNT} ETH!\n💰 New balance: ${balance.toFixed(8)} ETH`);
+            tg.HapticFeedback.notificationOccurred('success');
+            const nextTime = new Date();
+            nextTime.setHours(nextTime.getHours() + 6);
+            fetch(`${BOT_API_URL}/api/schedule-notification`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({user_id:user.id, notify_at:nextTime.toISOString()})
+            }).catch(e=>console.log('Schedule error:',e));
+            return true;
+        }
+        
+        function startTimer(callback){
+            let seconds = AD_DURATION;
+            const timerHtml = `<div class="timer-box" id="timerBox"><div class="timer-label">🎬 Watching Ad</div><div class="timer-seconds" id="timerSeconds">${seconds}</div><div class="timer-label">Please wait... Don't close</div></div>`;
+            const watchBtn = document.getElementById('watchBtn');
+            watchBtn.insertAdjacentHTML('afterend', timerHtml);
+            watchBtn.disabled = true;
+            currentTimer = setInterval(()=>{
+                seconds--;
+                const timerEl = document.getElementById('timerSeconds');
+                if(timerEl) timerEl.textContent = seconds;
+                if(seconds <= 0){
+                    clearInterval(currentTimer);
+                    currentTimer = null;
+                    document.getElementById('timerBox')?.remove();
+                    watchBtn.disabled = false;
+                    callback();
+                }
+            }, 1000);
+        }
+        
+        function stopTimer(){
+            if(currentTimer) clearInterval(currentTimer);
+            currentTimer = null;
+            document.getElementById('timerBox')?.remove();
+            const watchBtn = document.getElementById('watchBtn');
+            if(watchBtn) watchBtn.disabled = false;
+        }
+        
+        function watchAd(){
+            if(todayCount >= DAILY_LIMIT){
+                tg.showAlert(`⚠️ Daily limit reached! ${todayCount}/${DAILY_LIMIT}`);
+                return;
+            }
+            if(isWatching){
+                tg.showAlert('⏳ Please wait! Ad is already playing.');
+                return;
+            }
+            isWatching = true;
+            tg.showPopup({
+                title:'🎬 Watch Ad',
+                message:`Watch ${AD_DURATION} second ad to earn ${REWARD_AMOUNT} ETH\n\n⚠️ Closing early = NO REWARD!`,
+                buttons:[{id:'watch',type:'default',text:'📺 Watch Now'},{id:'cancel',type:'cancel',text:'Cancel'}]
+            },(buttonId)=>{
+                if(buttonId !== 'watch'){
+                    isWatching = false;
+                    return;
+                }
+                if(typeof window.show_10819887 !== 'undefined'){
+                    try{
+                        window.show_10819887({
+                            onReward:function(){ startTimer(()=>{ giveReward(); isWatching = false; }); },
+                            onClose:function(){ stopTimer(); isWatching = false; tg.showAlert('❌ Ad closed early! No reward.'); tg.HapticFeedback.notificationOccurred('error'); },
+                            onError:function(){ stopTimer(); isWatching = false; tg.showAlert('❌ Ad failed. Try again.'); }
+                        });
+                    }catch(e){ startTimer(()=>{ giveReward(); isWatching = false; }); }
+                }else{ startTimer(()=>{ giveReward(); isWatching = false; }); }
+            });
+        }
+        
+        function withdraw(){
+            if(balance < MIN_WITHDRAWAL){
+                tg.showAlert(`❌ Minimum withdrawal: ${MIN_WITHDRAWAL} ETH\nYour balance: ${balance.toFixed(8)} ETH`);
+                return;
+            }
+            tg.showPopup({
+                title:'💸 Withdraw ETH',
+                message:`Amount: ${balance.toFixed(8)} ETH\n\nEnter your ETH wallet address:`,
+                buttons:[{id:'ok',type:'ok',text:'Continue'},{id:'cancel',type:'cancel'}]
+            },(buttonId)=>{
+                if(buttonId === 'ok'){
+                    tg.showPopup({title:'📝 Wallet Address',message:'Paste your ETH address (starts with 0x)',type:'prompt'},(result)=>{
+                        if(result && result.startsWith('0x') && result.length === 42){
+                            const requests = JSON.parse(localStorage.getItem(`eth_withdrawals_${user?.id}`) || '[]');
+                            requests.push({amount:balance, wallet:result, date:new Date().toISOString(), status:'pending'});
+                            localStorage.setItem(`eth_withdrawals_${user?.id}`, JSON.stringify(requests));
+                            const withdrawnAmount = balance;
+                            balance = 0;
+                            saveData();
+                            render();
+                            tg.showAlert(`✅ Withdrawal submitted!\nAmount: ${withdrawnAmount.toFixed(8)} ETH\nWallet: ${result.substring(0,10)}...`);
+                            tg.HapticFeedback.notificationOccurred('success');
+                        }else{ tg.showAlert('❌ Invalid ETH address! Must be 42 chars starting with 0x'); }
+                    });
+                }
+            });
+        }
+        
+        function saveWallet(){
+            const input = document.getElementById('walletInput');
+            const wallet = input?.value.trim();
+            if(wallet && wallet.startsWith('0x') && wallet.length === 42){
+                localStorage.setItem(`eth_wallet_${user?.id}`, wallet);
+                tg.showAlert('✅ Wallet saved!');
+                tg.HapticFeedback.impactOccurred('light');
+            }else if(wallet){ tg.showAlert('❌ Invalid ETH address!'); }
+        }
+        
+        function render(){
+            const remaining = DAILY_LIMIT - todayCount;
+            const usdValue = balance * ETH_PRICE;
+            const progressPercent = (todayCount / DAILY_LIMIT) * 100;
+            const savedWallet = localStorage.getItem(`eth_wallet_${user?.id}`) || '';
+            const photoUrl = user?.photo_url;
+            document.getElementById('app').innerHTML = `
+                <div class="user-card"><div class="avatar">${photoUrl ? `<img src="${photoUrl}" onerror="this.innerHTML='👤'">` : '👤'}</div><div><div class="user-name">${user?.first_name || 'User'} ${user?.last_name || ''}</div><div class="user-id">🆔 ${user?.id || '-'}</div></div></div>
+                <div class="balance-card"><div class="balance-label">💰 YOUR BALANCE</div><div class="balance-amount">${balance.toFixed(8)} ETH</div><div class="balance-usd">≈ $${usdValue.toFixed(2)} USD</div><div class="progress-section"><div class="progress-text"><span>Daily Progress</span><span>${todayCount}/${DAILY_LIMIT}</span></div><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%"></div></div></div></div>
+                <div class="stats"><div class="stat-card"><div class="stat-number">${todayCount}</div><div class="stat-label">Today's Claims</div></div><div class="stat-card"><div class="stat-number">${remaining}</div><div class="stat-label">Remaining</div></div></div>
+                <button class="btn-watch" id="watchBtn" ${todayCount >= DAILY_LIMIT ? 'disabled' : ''}>🎬 Watch Ad & Earn ${REWARD_AMOUNT} ETH</button>
+                <button class="btn-withdraw" id="withdrawBtn">💸 Withdraw ETH (Min ${MIN_WITHDRAWAL} ETH)</button>
+                <div class="wallet-area"><span>📋</span><input type="text" id="walletInput" placeholder="Paste your ETH wallet address" value="${savedWallet}"><button id="saveWalletBtn">Save</button></div>
+                <div class="info">⚡ ${DAILY_LIMIT} ads/day • ${REWARD_AMOUNT} ETH per ad<br>💎 Need ${Math.ceil(MIN_WITHDRAWAL/REWARD_AMOUNT)} ads to withdraw</div>
+                <div class="warning" id="warningBox" style="${todayCount >= DAILY_LIMIT ? 'display:block' : 'display:none'}">⚠️ Daily limit reached! Come back tomorrow.</div>
+            `;
+            document.getElementById('watchBtn')?.addEventListener('click', watchAd);
+            document.getElementById('withdrawBtn')?.addEventListener('click', withdraw);
+            document.getElementById('saveWalletBtn')?.addEventListener('click', saveWallet);
+        }
+        
+        if(user){ loadData(); }
+        else{ document.getElementById('app').innerHTML = '<div class="loading"><div class="spinner"></div>⚠️ Please open from Telegram</div>'; }
+    </script>
 </body>
 </html>
