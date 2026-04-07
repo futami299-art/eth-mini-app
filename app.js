@@ -5,7 +5,7 @@ tg.ready();
 
 // Get user data
 const user = tg.initDataUnsafe?.user;
-const BOT_API_URL = 'https://eth-telegram-bot.up.railway.app'; // Bot project ka URL
+const BOT_API_URL = 'https://eth-telegram-bot.up.railway.app';
 
 // Constants
 const DAILY_LIMIT = 5;
@@ -120,7 +120,6 @@ function showRewardedAd() {
         return;
     }
     
-    // Monetag ad show
     if (typeof window.show_10819887 !== 'undefined') {
         window.show_10819887({
             onReward: () => {
@@ -136,7 +135,6 @@ function showRewardedAd() {
             }
         });
     } else {
-        // Fallback for testing
         tg.showConfirm('⚠️ Ad SDK loading. Simulate ad watch?', (confirmed) => {
             if (confirmed) {
                 todayClaims++;
