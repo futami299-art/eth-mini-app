@@ -1,20 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EthReward - Earn ETH</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ETH Reward App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="container" id="app">
-        <div class="loading">
-            <div class="spinner"></div>
-            Loading...
+
+  <!-- Animated background particles -->
+  <div class="bg-layer">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- Header / Profile -->
+    <header class="profile-card" id="profileCard">
+      <div class="profile-avatar-wrap">
+        <img id="profilePhoto" src="" alt="" class="profile-photo hidden" />
+        <div id="profileInitials" class="profile-initials">?</div>
+        <div class="profile-ring"></div>
+      </div>
+      <div class="profile-info">
+        <h2 id="profileName" class="profile-name">Loading...</h2>
+        <span id="profileId" class="profile-id">ID: ——</span>
+      </div>
+      <div class="eth-badge">
+        <span class="eth-icon">⬡</span> ETH
+      </div>
+    </header>
+
+    <!-- Balance Card -->
+    <section class="balance-card">
+      <div class="balance-label">Total Balance</div>
+      <div class="balance-amount">
+        <span id="balanceEth">0.00000</span>
+        <span class="balance-unit">ETH</span>
+      </div>
+      <div class="balance-usd" id="balanceUsd">≈ $0.00 USD</div>
+      <div class="balance-glow"></div>
+    </section>
+
+    <!-- Daily Progress -->
+    <section class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Daily Ads</span>
+        <span id="progressText" class="progress-count">0 / 5</span>
+      </div>
+      <div class="progress-track">
+        <div id="progressBar" class="progress-bar" style="width: 0%">
+          <div class="progress-shine"></div>
         </div>
-    </div>
-    <script src="app.js"></script>
+      </div>
+      <div class="progress-dots">
+        <div class="dot" id="dot0"></div>
+        <div class="dot" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot3"></div>
+        <div class="dot" id="dot4"></div>
+      </div>
+    </section>
+
+    <!-- Earn Button -->
+    <section class="earn-section">
+      <div id="adStatusMsg" class="ad-status-msg hidden"></div>
+
+      <!-- Timer overlay (shown during countdown) -->
+      <div id="timerOverlay" class="timer-overlay hidden">
+        <div class="timer-ring">
+          <svg viewBox="0 0 120 120" class="timer-svg">
+            <circle class="timer-track" cx="60" cy="60" r="52"/>
+            <circle id="timerCircle" class="timer-progress" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="timer-center">
+            <span id="timerCount" class="timer-count">15</span>
+            <span class="timer-label">sec</span>
+          </div>
+        </div>
+        <p class="timer-msg">Ad dekh rahe ho… reward aa raha hai!</p>
+      </div>
+
+      <button id="earnBtn" class="earn-btn">
+        <div class="earn-btn-inner">
+          <span class="earn-icon">▶</span>
+          <span class="earn-text">Watch Ad & Earn</span>
+          <span class="earn-amount">0.00005 ETH</span>
+        </div>
+        <div class="earn-btn-glow"></div>
+      </button>
+
+      <p class="earn-note" id="earnNote">⚡ Ad dekhne ke baad 15 sec timer chalega</p>
+    </section>
+
+    <!-- Withdrawal Section -->
+    <section class="withdraw-section">
+      <h3 class="section-title">
+        <span class="section-icon">⬇</span> Withdrawal
+      </h3>
+
+      <div class="withdraw-card">
+        <div class="withdraw-min-info">
+          <span>Min. Withdrawal</span>
+          <strong>0.001 ETH</strong>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">ETH Wallet Address</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="ethAddressInput"
+              class="eth-input"
+              placeholder="0x..."
+              spellcheck="false"
+              autocomplete="off"
+            />
+            <button class="paste-btn" id="pasteBtn" title="Paste">📋</button>
+          </div>
+        </div>
+
+        <div class="withdraw-actions">
+          <button id="saveAddressBtn" class="action-btn btn-save">
+            <span>💾</span> Save Address
+          </button>
+          <button id="withdrawBtn" class="action-btn btn-withdraw">
+            <span>🚀</span> Withdraw ETH
+          </button>
+        </div>
+
+        <div id="withdrawMsg" class="withdraw-msg hidden"></div>
+      </div>
+    </section>
+
+    <!-- Recent Earnings Log -->
+    <section class="log-section">
+      <h3 class="section-title">
+        <span class="section-icon">📋</span> Recent Earnings
+      </h3>
+      <div id="earningsLog" class="earnings-log">
+        <div class="log-empty">Abhi tak koi earning nahi…</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Monetag SDK -->
+  <script src="//libtl.com/sdk.js" data-zone="10819887" data-sdk="show_10819887" async></script>
+  <script src="app.js"></script>
 </body>
 </html>
