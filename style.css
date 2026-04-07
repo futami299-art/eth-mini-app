@@ -1,0 +1,266 @@
+/* ========================================
+   EthReward Mini App - Complete Styles
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--tg-theme-bg-color, #121212);
+    color: var(--tg-theme-text-color, #ffffff);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ===== User Card ===== */
+.user-card {
+    background: var(--tg-theme-secondary-bg-color, #1e1e1e);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.user-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.user-info p {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* ===== Balance Card ===== */
+.balance-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 24px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+}
+
+.balance-label {
+    font-size: 14px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.balance-usd {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 8px;
+}
+
+/* ===== Stats Grid ===== */
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: var(--tg-theme-secondary-bg-color, #1e1e1e);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stat-card:active {
+    transform: scale(0.96);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.stat-label {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-top: 6px;
+}
+
+/* ===== Buttons ===== */
+.ad-button {
+    width: 100%;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border: none;
+    padding: 18px 20px;
+    border-radius: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+}
+
+.ad-button:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.ad-button:disabled {
+    opacity: 0.5;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.withdraw-btn {
+    width: 100%;
+    background: transparent;
+    border: 2px solid #667eea;
+    padding: 14px 20px;
+    border-radius: 60px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #667eea;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.withdraw-btn:active {
+    transform: scale(0.97);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* ===== Info Text ===== */
+.info-text {
+    font-size: 11px;
+    text-align: center;
+    opacity: 0.4;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+/* ===== Warning Message ===== */
+.limit-warning {
+    background: rgba(245, 87, 108, 0.15);
+    border: 1px solid #f5576c;
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    color: #f5576c;
+}
+
+/* ===== Loading State ===== */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 2px solid #667eea;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Telegram Theme Support ===== */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #121212;
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    .balance-amount {
+        font-size: 28px;
+    }
+    
+    .stat-value {
+        font-size: 22px;
+    }
+    
+    .ad-button {
+        padding: 16px;
+        font-size: 16px;
+    }
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-card,
+.balance-card,
+.stat-card,
+.ad-button,
+.withdraw-btn {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.1s; }
+.ad-button { animation-delay: 0.15s; }
+.withdraw-btn { animation-delay: 0.2s; }
