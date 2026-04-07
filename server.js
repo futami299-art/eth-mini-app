@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from current directory
 app.use(express.static(__dirname));
 
-// All routes serve index.html (for Telegram WebApp routing)
+// All routes serve index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
