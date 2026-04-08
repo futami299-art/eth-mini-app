@@ -35,76 +35,18 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Reduced Loop Animations */
-        @keyframes floatGentle { 
-            0% { transform: translateY(0px); } 
-            50% { transform: translateY(-5px); } 
-            100% { transform: translateY(0px); } 
-        }
-        
-        @keyframes pulseGlowGentle { 
-            0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); } 
-            50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); } 
-            100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); } 
-        }
-        
-        @keyframes shineOnce { 
-            0% { left: -100%; opacity: 0; } 
-            10% { opacity: 0.5; }
-            30% { left: 100%; opacity: 0.5; } 
-            100% { left: 100%; opacity: 0; } 
-        }
-        
-        @keyframes slideUpSmooth { 
-            0% { opacity: 0; transform: translateY(30px); } 
-            100% { opacity: 1; transform: translateY(0); } 
-        }
-        
-        @keyframes fadeInScale { 
-            0% { opacity: 0; transform: scale(0.95); } 
-            100% { opacity: 1; transform: scale(1); } 
-        }
-        
-        @keyframes rotateSlow { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
-        }
-        
-        @keyframes borderPulse {
-            0% { border-color: rgba(59, 130, 246, 0.3); }
-            50% { border-color: rgba(59, 130, 246, 0.8); }
-            100% { border-color: rgba(59, 130, 246, 0.3); }
-        }
-        
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 5px rgba(59,130,246,0.3); }
-            50% { text-shadow: 0 0 15px rgba(59,130,246,0.6); }
-            100% { text-shadow: 0 0 5px rgba(59,130,246,0.3); }
-        }
-        
-        @keyframes bounceOnce {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        @keyframes slideInLeft {
-            0% { opacity: 0; transform: translateX(-30px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-        
-        @keyframes slideInRight {
-            0% { opacity: 0; transform: translateX(30px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes floatGentle { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
+        @keyframes pulseGlowGentle { 0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); } 50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); } 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); } }
+        @keyframes shineOnce { 0% { left: -100%; opacity: 0; } 5% { opacity: 0.3; } 15% { left: 100%; opacity: 0.3; } 20% { left: 100%; opacity: 0; } 100% { left: 100%; opacity: 0; } }
+        @keyframes slideUpSmooth { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInScale { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes rotateSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes borderPulse { 0% { border-color: rgba(59, 130, 246, 0.3); } 50% { border-color: rgba(59, 130, 246, 0.8); } 100% { border-color: rgba(59, 130, 246, 0.3); } }
+        @keyframes glowPulse { 0% { text-shadow: 0 0 5px rgba(59,130,246,0.3); } 50% { text-shadow: 0 0 15px rgba(59,130,246,0.6); } 100% { text-shadow: 0 0 5px rgba(59,130,246,0.3); } }
+        @keyframes bounceOnce { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes zoomInOut { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* One-time entrance animations */
-        .slide-up { animation: slideUpSmooth 0.5s ease-out forwards; }
-        .fade-scale { animation: fadeInScale 0.4s ease-out forwards; }
-        .slide-left { animation: slideInLeft 0.4s ease-out forwards; }
-        .slide-right { animation: slideInRight 0.4s ease-out forwards; }
-
-        /* App Header */
         .app-header {
             display: flex;
             align-items: center;
@@ -123,14 +65,15 @@
         .avatar {
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            background-size: 200% 200%;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 22px;
-            animation: floatGentle 6s ease-in-out infinite;
+            animation: floatGentle 6s ease-in-out infinite, gradientShift 10s ease infinite;
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
             border: 2px solid rgba(255,255,255,0.2);
             overflow: hidden;
@@ -142,7 +85,7 @@
             position: absolute;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
             animation: shineOnce 8s infinite;
         }
 
@@ -160,16 +103,17 @@
         }
         
         .user-info .telegram-id {
-            font-size: 12px;
-            color: #8e8e93;
+            font-size: 13px;
+            background: linear-gradient(135deg, #8e8e93, #a0a0a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-top: 2px;
-            animation: slideInRight 0.4s ease-out 0.1s both;
         }
 
         .user-info p {
             font-size: 14px;
             color: #8e8e93;
-            animation: slideInRight 0.4s ease-out 0.15s both;
         }
 
         .eth-badge {
@@ -180,7 +124,7 @@
             align-items: center;
             gap: 6px;
             border: 1px solid rgba(255,255,255,0.1);
-            animation: pulseGlowGentle 4s ease-in-out infinite;
+            animation: pulseGlowGentle 4s ease-in-out infinite, zoomInOut 5s ease-in-out infinite;
         }
 
         .eth-icon {
@@ -189,7 +133,6 @@
             display: inline-block;
         }
 
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             background: rgba(28, 33, 43, 0.9);
@@ -198,7 +141,6 @@
             padding: 4px;
             margin-bottom: 24px;
             border: 1px solid rgba(255,255,255,0.1);
-            animation: slideUpSmooth 0.5s ease-out 0.1s both;
         }
 
         .nav-tab {
@@ -211,14 +153,8 @@
             transition: all 0.3s ease;
             cursor: pointer;
             font-size: 16px;
-            position: relative;
-            overflow: hidden;
         }
         
-        .nav-tab:hover {
-            background: rgba(59, 130, 246, 0.1);
-        }
-
         .nav-tab.active {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
@@ -234,7 +170,6 @@
             display: block;
         }
 
-        /* Balance Card */
         .balance-card {
             background: linear-gradient(145deg, #1a2333, #111827);
             border-radius: 28px;
@@ -257,12 +192,26 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
             animation: shineOnce 6s infinite;
         }
+        
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 4s infinite;
+            pointer-events: none;
+        }
 
         .balance-label {
             font-size: 15px;
             color: #8e8e93;
-            letter-spacing: 0.5px;
             margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
         }
 
         .balance-amount {
@@ -272,6 +221,8 @@
             align-items: baseline;
             gap: 6px;
             animation: glowPulse 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
         }
 
         .balance-amount span {
@@ -288,14 +239,12 @@
             margin-top: 4px;
         }
 
-        /* Daily Bonus Section */
         .daily-section {
             background: linear-gradient(135deg, #1c212b, #222838);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 24px;
             border: 1px solid rgba(255,255,255,0.05);
-            animation: slideUpSmooth 0.5s ease-out 0.2s both;
         }
 
         .section-header {
@@ -332,25 +281,13 @@
             border-radius: 14px;
             padding: 12px 4px;
             text-align: center;
-            transition: all 0.3s ease;
             border: 1px solid transparent;
-            opacity: 0;
-            animation: fadeInScale 0.3s ease-out forwards;
         }
-        
-        .bonus-day:nth-child(1) { animation-delay: 0.05s; }
-        .bonus-day:nth-child(2) { animation-delay: 0.1s; }
-        .bonus-day:nth-child(3) { animation-delay: 0.15s; }
-        .bonus-day:nth-child(4) { animation-delay: 0.2s; }
-        .bonus-day:nth-child(5) { animation-delay: 0.25s; }
-        .bonus-day:nth-child(6) { animation-delay: 0.3s; }
-        .bonus-day:nth-child(7) { animation-delay: 0.35s; }
 
         .bonus-day.active {
             border-color: #3b82f6;
             background: linear-gradient(135deg, #1a2a44, #0f172a);
             box-shadow: 0 0 15px rgba(59,130,246,0.3);
-            transform: scale(1.02);
         }
 
         .bonus-day.completed {
@@ -374,6 +311,7 @@
 
         .claim-btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background-size: 200% 200%;
             color: white;
             border: none;
             padding: 14px 20px;
@@ -383,31 +321,19 @@
             width: 100%;
             margin-top: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
             box-shadow: 0 8px 20px rgba(59,130,246,0.3);
-            position: relative;
-            overflow: hidden;
+            animation: gradientShift 8s ease infinite;
         }
         
-        .claim-btn:active {
-            transform: scale(0.97);
-        }
+        .claim-btn:active { transform: scale(0.97); }
+        .claim-btn:disabled { background: #3a3f4a; box-shadow: none; animation: none; color: #8e8e93; }
 
-        .claim-btn:disabled {
-            background: #3a3f4a;
-            box-shadow: none;
-            color: #8e8e93;
-            transform: none;
-        }
-
-        /* Task Card */
         .task-card {
             background: linear-gradient(135deg, #1c212b, #222838);
             border-radius: 24px;
             padding: 24px 20px;
             margin-bottom: 20px;
             border: 1px solid rgba(255,255,255,0.05);
-            animation: slideUpSmooth 0.5s ease-out 0.3s both;
         }
 
         .task-header {
@@ -421,12 +347,13 @@
             width: 52px;
             height: 52px;
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            background-size: 200% 200%;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            animation: floatGentle 5s ease-in-out infinite;
+            animation: floatGentle 5s ease-in-out infinite, gradientShift 8s ease infinite;
             box-shadow: 0 8px 20px rgba(139,92,246,0.3);
         }
 
@@ -450,14 +377,9 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 18px;
-            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .reward-label {
-            font-size: 15px;
-            color: #8e8e93;
-        }
-
+        .reward-label { color: #8e8e93; }
         .reward-value {
             font-size: 22px;
             font-weight: 700;
@@ -477,14 +399,12 @@
             width: 38px;
             height: 38px;
             background: rgba(11, 14, 20, 0.8);
-            backdrop-filter: blur(5px);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             border: 1px solid #2a313c;
-            transition: all 0.3s ease;
         }
 
         .attempt-dot.used {
@@ -495,7 +415,6 @@
 
         .timer-display {
             background: rgba(11, 14, 20, 0.8);
-            backdrop-filter: blur(5px);
             border-radius: 30px;
             padding: 12px 16px;
             display: flex;
@@ -505,19 +424,12 @@
             border: 1px solid #2a313c;
         }
 
-        .timer-label {
-            color: #8e8e93;
-        }
-
-        .timer-value {
-            font-weight: 700;
-            font-size: 20px;
-            color: #f59e0b;
-            letter-spacing: 1px;
-        }
+        .timer-label { color: #8e8e93; }
+        .timer-value { font-weight: 700; font-size: 20px; color: #f59e0b; }
 
         .action-btn {
             background: linear-gradient(90deg, #3b82f6, #2563eb);
+            background-size: 200% 200%;
             color: white;
             border: none;
             padding: 16px;
@@ -526,27 +438,18 @@
             font-size: 18px;
             width: 100%;
             cursor: pointer;
-            transition: all 0.2s ease;
             box-shadow: 0 6px 18px rgba(37,99,235,0.3);
+            animation: gradientShift 8s ease infinite;
         }
 
-        .action-btn:active {
-            transform: scale(0.98);
-        }
+        .action-btn:active { transform: scale(0.98); }
+        .action-btn:disabled { background: #3a3f4a; box-shadow: none; color: #8e8e93; animation: none; }
 
-        .action-btn:disabled {
-            background: #3a3f4a;
-            box-shadow: none;
-            color: #8e8e93;
-        }
-
-        /* Withdrawal Page */
         .withdraw-card {
             background: linear-gradient(135deg, #1c212b, #222838);
             border-radius: 24px;
             padding: 24px;
             margin-bottom: 20px;
-            animation: slideUpSmooth 0.5s ease-out;
         }
 
         .min-withdraw {
@@ -556,7 +459,6 @@
             text-align: center;
             margin-bottom: 24px;
             border: 1px solid rgba(16, 185, 129, 0.3);
-            animation: borderPulse 4s ease-in-out infinite;
         }
 
         .input-group {
@@ -573,12 +475,10 @@
             width: 100%;
             padding: 16px;
             background: rgba(11, 14, 20, 0.8);
-            backdrop-filter: blur(5px);
             border: 1px solid #2a313c;
             border-radius: 20px;
             color: white;
             font-size: 16px;
-            transition: all 0.2s ease;
         }
         
         .input-group input:focus {
@@ -589,6 +489,7 @@
 
         .withdraw-btn {
             background: linear-gradient(135deg, #10b981, #059669);
+            background-size: 200% 200%;
             color: white;
             border: none;
             padding: 16px;
@@ -597,19 +498,12 @@
             font-size: 18px;
             width: 100%;
             cursor: pointer;
-            transition: all 0.2s ease;
+            animation: gradientShift 8s ease infinite;
         }
         
-        .withdraw-btn:active {
-            transform: scale(0.97);
-        }
+        .withdraw-btn:active { transform: scale(0.97); }
+        .withdraw-btn:disabled { background: #3a3f4a; color: #8e8e93; animation: none; }
 
-        .withdraw-btn:disabled {
-            background: #3a3f4a;
-            color: #8e8e93;
-        }
-
-        /* Message Toast */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -626,7 +520,6 @@
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .toast-message.show {
@@ -636,7 +529,6 @@
 
         .toast-message.success {
             background: #10b981;
-            box-shadow: 0 10px 30px rgba(16,185,129,0.4);
         }
 
         .footer-note {
@@ -644,35 +536,71 @@
             margin-top: 30px;
             color: #5a626e;
             font-size: 12px;
-            animation: fadeInScale 0.5s ease-out 0.4s both;
         }
 
-        /* Loading Indicator */
-        .ad-loading {
+        /* Ad Status Overlay - Shows when user is away watching ad */
+        .ad-status-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 1999;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(8px);
         }
 
-        .ad-loading-spinner {
-            width: 70px;
-            height: 70px;
-            border: 3px solid #3a3f4a;
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: rotateSlow 1.5s linear infinite;
+        .ad-status-container {
+            background: #1c212b;
+            border-radius: 32px;
+            padding: 30px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            border: 2px solid #3b82f6;
         }
 
-        .ad-loading-text {
-            position: absolute;
-            bottom: 100px;
-            color: white;
-            font-size: 16px;
+        .ad-status-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: floatGentle 2s ease-in-out infinite;
+        }
+
+        .ad-status-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+
+        .ad-status-text {
+            color: #8e8e93;
+            margin-bottom: 20px;
+        }
+
+        .ad-status-timer {
+            font-size: 48px;
+            font-weight: 800;
+            color: #f59e0b;
+            margin: 20px 0;
+        }
+
+        .ad-status-warning {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(239,68,68,0.1);
+            border-radius: 10px;
+        }
+        
+        .ad-status-success {
+            color: #10b981;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(16,185,129,0.1);
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -683,7 +611,7 @@
         <div class="avatar" id="userAvatar">👤</div>
         <div class="user-info">
             <h3 id="userName">Loading...</h3>
-            <p class="telegram-id" id="telegramId">@username</p>
+            <p class="telegram-id" id="telegramId">ID: Loading...</p>
             <p>ETH Earner</p>
         </div>
     </div>
@@ -693,7 +621,6 @@
     </div>
 </div>
 
-<!-- Navigation Tabs -->
 <div class="nav-tabs">
     <div class="nav-tab active" data-page="home">🏠 Home</div>
     <div class="nav-tab" data-page="withdraw">💸 Withdraw</div>
@@ -728,7 +655,7 @@
         </div>
         <div class="reward-box">
             <span class="reward-label">Reward per ad</span>
-            <span class="reward-value" id="rewardPerAd">0.000003 ETH</span>
+            <span class="reward-value">0.000003 ETH</span>
         </div>
         <div class="attempts" id="attemptDots"></div>
         <div class="timer-display">
@@ -771,15 +698,18 @@
     </div>
 </div>
 
-<!-- Ad Loading Indicator -->
-<div class="ad-loading" id="adLoading">
-    <div class="ad-loading-spinner"></div>
-    <div class="ad-loading-text">Loading Ad...</div>
+<!-- AD STATUS OVERLAY - Shows when user is away -->
+<div class="ad-status-overlay" id="adStatusOverlay">
+    <div class="ad-status-container">
+        <div class="ad-status-icon" id="adStatusIcon">📺</div>
+        <div class="ad-status-title" id="adStatusTitle">Opening Ad...</div>
+        <div class="ad-status-text" id="adStatusMessage">Please watch the ad completely</div>
+        <div class="ad-status-timer" id="adStatusTimer">0s / 15s</div>
+        <div id="adStatusWarningContainer"></div>
+    </div>
 </div>
 
-<!-- Toast Message -->
 <div class="toast-message" id="toast"></div>
-
 <div class="footer-note">ETH EARN • Powered by Monetag</div>
 
 <script>
@@ -789,15 +719,15 @@
         tg.ready();
         
         const user = tg.initDataUnsafe?.user;
-        let telegramUsername = '@user';
+        let telegramId = 'Unknown';
         let telegramFirstName = 'User';
         
         if (user) {
             telegramFirstName = user.first_name || 'User';
-            telegramUsername = user.username ? '@' + user.username : '@user' + (user.id ? user.id.toString().slice(-4) : '');
+            telegramId = user.id ? user.id.toString() : 'Unknown';
             
             document.getElementById('userName').innerText = telegramFirstName;
-            document.getElementById('telegramId').innerText = telegramUsername;
+            document.getElementById('telegramId').innerText = `ID: ${telegramId}`;
             
             if (user.photo_url) {
                 document.getElementById('userAvatar').innerHTML = `<img src="${user.photo_url}" alt="Profile">`;
@@ -806,7 +736,7 @@
             }
         } else {
             document.getElementById('userName').innerText = 'User';
-            document.getElementById('telegramId').innerText = '@user';
+            document.getElementById('telegramId').innerText = 'ID: Guest';
             document.getElementById('userAvatar').innerText = 'U';
         }
 
@@ -818,9 +748,12 @@
         let adCooldownEnd = null;
         let bonusClaimedToday = false;
         
+        // Ad tracking - THE CORRECT WAY
         let adStartTime = null;
         let isAdActive = false;
         let pendingAction = null;
+        let adCheckInterval = null;
+        let adCompleted = false;
 
         const dailyBonuses = [0.000001, 0.000009, 0.000001, 0.000015, 0.000002, 0.000020, 0.000003];
         const AD_REWARD = 0.000003;
@@ -843,7 +776,12 @@
         const withdrawBtn = document.getElementById('withdrawBtn');
         const ethAddressInput = document.getElementById('ethAddress');
         const withdrawAmountInput = document.getElementById('withdrawAmount');
-        const adLoading = document.getElementById('adLoading');
+        const adStatusOverlay = document.getElementById('adStatusOverlay');
+        const adStatusIcon = document.getElementById('adStatusIcon');
+        const adStatusTitle = document.getElementById('adStatusTitle');
+        const adStatusMessage = document.getElementById('adStatusMessage');
+        const adStatusTimer = document.getElementById('adStatusTimer');
+        const adStatusWarningContainer = document.getElementById('adStatusWarningContainer');
 
         // Tabs
         document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -873,7 +811,7 @@
         }
 
         function loadState() {
-            const saved = localStorage.getItem('ethEarnStateV4');
+            const saved = localStorage.getItem('ethEarnStateV8');
             if (saved) {
                 try {
                     const d = JSON.parse(saved);
@@ -892,7 +830,7 @@
         }
 
         function saveState() {
-            localStorage.setItem('ethEarnStateV4', JSON.stringify({
+            localStorage.setItem('ethEarnStateV8', JSON.stringify({
                 balance, currentStreak, lastClaimDate: lastClaimDate?.toISOString(),
                 adAttempts, adCooldownEnd: adCooldownEnd?.toISOString(), bonusClaimedToday
             }));
@@ -952,29 +890,88 @@
 
         setInterval(() => updateUI(), 1000);
 
-        function showMonetagAd(actionType) {
+        // CORRECT AD SYSTEM - Detects when user LEAVES and automatically rewards
+        function startAd(actionType) {
+            pendingAction = actionType;
+            isAdActive = true;
+            adStartTime = Date.now();
+            adCompleted = false;
+            
+            // Reset overlay UI
+            adStatusIcon.innerText = '📺';
+            adStatusTitle.innerText = 'Opening Ad...';
+            adStatusMessage.innerText = 'Please watch the ad completely';
+            adStatusTimer.innerText = '0s / 15s';
+            adStatusWarningContainer.innerHTML = '<div class="ad-status-warning">⚠️ Do not return before 15 seconds or reward will be cancelled</div>';
+            
+            // Show overlay
+            adStatusOverlay.style.display = 'flex';
+            
+            // Trigger Monetag ad
             if (typeof window.show_10819887 === 'function') {
-                pendingAction = actionType;
-                isAdActive = true;
-                adStartTime = Date.now();
-                adLoading.style.display = 'flex';
                 window.show_10819887();
-                
-                setTimeout(() => {
-                    if (isAdActive) {
-                        isAdActive = false;
-                        adLoading.style.display = 'none';
-                        showToast('⚠️ Ad session expired. Please try again.', false);
-                        pendingAction = null;
-                    }
-                }, 120000);
-            } else {
-                showToast('⚠️ Ad network loading...', false);
             }
+            
+            // Start checking elapsed time
+            if (adCheckInterval) clearInterval(adCheckInterval);
+            adCheckInterval = setInterval(() => {
+                if (!isAdActive) {
+                    clearInterval(adCheckInterval);
+                    adCheckInterval = null;
+                    return;
+                }
+                
+                const elapsedSeconds = Math.floor((Date.now() - adStartTime) / 1000);
+                adStatusTimer.innerText = `${elapsedSeconds}s / 15s`;
+                
+                // When 15 seconds complete, automatically give reward and close overlay
+                if (elapsedSeconds >= REQUIRED_AD_TIME && !adCompleted) {
+                    adCompleted = true;
+                    
+                    // Update UI to show success
+                    adStatusIcon.innerText = '✅';
+                    adStatusTitle.innerText = 'Ad Completed!';
+                    adStatusMessage.innerText = 'Reward earned successfully!';
+                    adStatusWarningContainer.innerHTML = '<div class="ad-status-success">✅ Returning to app with reward...</div>';
+                    
+                    // Auto close overlay and give reward after 1 second
+                    setTimeout(() => {
+                        if (isAdActive) {
+                            // Clean up
+                            clearInterval(adCheckInterval);
+                            adCheckInterval = null;
+                            isAdActive = false;
+                            adStatusOverlay.style.display = 'none';
+                            
+                            // Give reward
+                            giveReward();
+                        }
+                    }, 1000);
+                }
+            }, 100);
         }
-
-        function executePendingAction() {
-            if (!pendingAction) return;
+        
+        // This runs when user RETURNS to the app manually
+        function handleAppReturn() {
+            if (!isAdActive) return;
+            
+            const timeSpent = (Date.now() - adStartTime) / 1000;
+            
+            // If ad already completed, let the auto-complete handle it
+            if (adCompleted) return;
+            
+            // User returned before 15 seconds - CANCEL
+            clearInterval(adCheckInterval);
+            adCheckInterval = null;
+            isAdActive = false;
+            adStatusOverlay.style.display = 'none';
+            
+            showToast(`❌ Ad cancelled! You returned after ${Math.floor(timeSpent)}s. Must watch 15s.`, false);
+            pendingAction = null;
+            adStartTime = null;
+        }
+        
+        function giveReward() {
             const action = pendingAction;
             pendingAction = null;
             
@@ -983,12 +980,10 @@
                 balance += bonus; bonusClaimedToday = true; lastClaimDate = new Date();
                 showToast(`🎉 Day ${currentStreak} Bonus: +${bonus.toFixed(6)} ETH!`, true);
                 currentStreak = currentStreak < 7 ? currentStreak + 1 : 1;
-                updateUI();
             } else if (action === 'ad') {
                 adAttempts++; balance += AD_REWARD;
                 if (adAttempts >= 3) adCooldownEnd = new Date(Date.now() + COOLDOWN_MINUTES * 60000);
                 showToast(`+${AD_REWARD.toFixed(6)} ETH Earned!`, true);
-                updateUI();
             } else if (action === 'withdraw') {
                 const addr = ethAddressInput.value.trim();
                 const amt = parseFloat(withdrawAmountInput.value);
@@ -996,31 +991,38 @@
                     balance -= amt;
                     showToast(`✅ Withdrawal of ${amt.toFixed(6)} ETH requested!`, true);
                     ethAddressInput.value = ''; withdrawAmountInput.value = MIN_WITHDRAW;
-                    updateUI();
                 }
             }
-        }
-
-        function handleAppReturn() {
-            if (!isAdActive) return;
-            const timeSpent = (Date.now() - adStartTime) / 1000;
             
-            if (timeSpent >= REQUIRED_AD_TIME) {
-                isAdActive = false;
-                adLoading.style.display = 'none';
-                executePendingAction();
-            } else {
-                isAdActive = false;
-                adLoading.style.display = 'none';
-                showToast(`❌ Ad cancelled! Must watch ${REQUIRED_AD_TIME}s. (Only ${Math.floor(timeSpent)}s)`, false);
-                pendingAction = null;
-            }
+            updateUI();
             adStartTime = null;
         }
 
+        // Detect when user leaves and returns
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // User left the app
+                if (isAdActive) {
+                    adStatusTitle.innerText = 'Watching Ad...';
+                }
+            } else {
+                // User returned to the app
+                if (isAdActive) {
+                    handleAppReturn();
+                }
+            }
+        });
+        
+        // Backup: also check on window focus
+        window.addEventListener('focus', () => {
+            if (isAdActive) {
+                handleAppReturn();
+            }
+        });
+
         claimDailyBtn.addEventListener('click', () => {
             if (bonusClaimedToday) { showToast('Already claimed today!', false); return; }
-            showMonetagAd('bonus');
+            startAd('bonus');
         });
 
         watchAdBtn.addEventListener('click', () => {
@@ -1029,7 +1031,7 @@
                 else showToast('Cooldown active.', false);
                 return;
             }
-            showMonetagAd('ad');
+            startAd('ad');
         });
 
         withdrawBtn.addEventListener('click', () => {
@@ -1038,11 +1040,9 @@
             if (!addr.startsWith('0x') || addr.length < 42) { showToast('Invalid ETH Address'); return; }
             if (amt < MIN_WITHDRAW) { showToast(`Minimum ${MIN_WITHDRAW} ETH`); return; }
             if (amt > balance) { showToast('Insufficient balance'); return; }
-            showMonetagAd('withdraw');
+            startAd('withdraw');
         });
 
-        document.addEventListener('visibilitychange', () => { if (!document.hidden && isAdActive) handleAppReturn(); });
-        window.addEventListener('focus', () => { if (isAdActive) handleAppReturn(); });
         ethAddressInput.addEventListener('input', updateUI);
         withdrawAmountInput.addEventListener('input', updateUI);
 
@@ -1050,10 +1050,6 @@
         renderBonusGrid();
         renderAttempts();
         updateUI();
-        
-        setTimeout(() => {
-            if (typeof window.show_10819887 !== 'function') console.warn('Monetag SDK not loaded');
-        }, 2000);
     })();
 </script>
 </body>
